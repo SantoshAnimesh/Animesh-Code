@@ -1,3 +1,27 @@
+
+// ------ better with handle edge cases -----------
+    const getGlobal = () =>
+    typeof globalThis !== "undefined" ? globalThis : (function () { return this; })();
+
+  Function.prototype.myCall = function (thisArg, ...args) {
+    if (typeof this !== "function") {
+      throw new TypeError("call must be called on a function");
+    }
+
+    const context = thisArg == null ? getGlobal() : Object(thisArg);
+    const key = typeof Symbol !== "undefined" ? Symbol() : "__call__";
+
+    context[key] = this;
+    try {
+      return context[key](...args);
+    } finally {
+      delete context[key];
+    }
+  };
+// -------------------------------------------- 
+
+
+// ----------- Normal --------------
 Function.prototype.myCall = function(context,...args){
   // context = context === null ? window : Object(context);
   context = context ?? window;

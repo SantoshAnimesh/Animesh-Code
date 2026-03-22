@@ -1,3 +1,6 @@
+
+// npm install @reduxjs/toolkit react-redux redux-saga
+
 import { configureStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
 import userReducer from "../stores/userSlice.js";

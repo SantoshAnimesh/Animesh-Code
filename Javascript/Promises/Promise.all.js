@@ -1,42 +1,61 @@
-Promise.myAll = function (promises) {
-  return new Promise((resolve, reject) => {
-    if (!Array.isArray(promises)) {
-      return reject(new TypeError("Argument must be an array"));
-    }
+if (!Promise.myAll) {
+  Promise.myAll = function (iterable) {
+    return new Promise((resolve, reject) => {
+      // 1. Handle null / undefined
+      if (iterable == null) {
+        return reject(new TypeError("Argument is not iterable"));
+      }
 
-    const results = [];
-    let completed = 0;
+      // 2. Check if iterable
+      if (typeof iterable[Symbol.iterator] !== "function") {
+        return reject(new TypeError("Argument is not iterable"));
+      }
 
-    if (promises.length === 0) {
-      return resolve([]);
-    }
+      const results = [];
+      let total = 0;
+      let resolvedCount = 0;
+      let index = 0;
 
-    promises.forEach((p, index) => {
-      Promise.resolve(p) // handle non-promises
-        .then(value => {
-          results[index] = value;
-          completed++;
+      // 3. Iterate
+      for (const item of iterable) {
+        const currentIndex = index;
+        index++;
+        total++;
 
-          if (completed === promises.length) {
-            resolve(results);
-          }
-        })
-        .catch(reject); // reject immediately
+        // Normalize values (promise / non-promise / thenable)
+        Promise.resolve(item)
+          .then((value) => {
+            results[currentIndex] = value;
+            resolvedCount++;
+
+            // 4. All resolved
+            if (resolvedCount === total) {
+              resolve(results);
+            }
+          })
+          .catch((err) => {
+            // 5. Reject immediately
+            reject(err);
+          });
+      }
+
+      // 6. Empty iterable → resolve immediately
+      if (total === 0) {
+        resolve([]);
+      }
     });
-  });
-};
+  };
+}
 
+example------
+const p1 = Promise.resolve(1);
+const p2 = Promise.resolve(2);
+Promise.myAll([p1, p2]).then(console.log);//[1, 2]
 
-// --------- Example ---------------
-const p1 = Promise.resolve(10);
-const p2 = new Promise(r => setTimeout(() => r(20), 100));
-const p3 = 30;
-
-Promise.myAll([p1, p2, p3])
-  .then(res => console.log(res))
-  .catch(err => console.log(err));
-
-// ::Output: [10, 20, 30]
-
-
+// --with error ----
+constp1=Promise.resolve("OK");
+constp2=Promise.reject("Error");
+Promise.myAll([p1,p2])
+.then(console.log)
+.catch(console.error); // Error
 

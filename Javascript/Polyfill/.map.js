@@ -1,3 +1,22 @@
+// ------ Simeple Implement -----
+Array.prototype.customMap = function(callback) {
+  const result = [];
+  for (let i = 0; i < this.length; i++) {
+    result.push(callback(this[i], i, this));
+  }
+  return result;
+};
+
+// Example usage
+const numbers = [1, 2, 3, 4, 5];
+
+const doubledNumbers = numbers.customMap(function(num) {
+  return num * 2;
+});
+
+console.log(doubledNumbers); // Output: [2, 4, 6, 8, 10]
+
+// ------------ Handle Edge cases ------------> 
 
 if (!Array.prototype.myMap) {
   Array.prototype.myMap = function(callback, thisArg) {

@@ -2,6 +2,12 @@
 leading: Means fall immeditate not wait for timer
 trailing: it means wait for time
 
+leading: false, trailing: true	-> Run after delay (default)
+leading: true, trailing: false	-> Run immediately once
+leading: true, trailing: true	  -> Run first + last
+cancel()	-> Stop scheduled execution
+flush()	-> Run immediately if pending
+
 // ------------- Code ----------
 function debounce(fn, delay = 0, options = {}) {
   if (typeof fn !== "function") {
@@ -117,3 +123,25 @@ setTimeout(() => {
   log.cancel();
 }, 500);
 ✅ Output: (no output)
+
+// 5. Flush Example (Force execution)
+const log = debounce((msg) => {
+  console.log("Final Save:", msg);
+}, 1000);
+log("draft1");
+// Force execution immediately
+setTimeout(() => {
+  log.flush();
+}, 500);
+✅ Output: Final Save: draft1
+
+// 6. Real React Use Case (Search Input)
+const searchApi = debounce((query) => {
+  console.log("Fetching:", query);
+}, 500);
+input.addEventListener("input", (e) => {
+  searchApi(e.target.value);
+});
+👉 Without debounce: 10 API calls
+👉 With debounce: Only 1 API call
+

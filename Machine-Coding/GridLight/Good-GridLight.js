@@ -111,4 +111,66 @@ const GridLight = ({ size = 5, disabledIndices = [] }) => {
   );
 };
 
+// ---------GridLight.css------------------>>
+.gridlight-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem auto;
+  font-family: sans-serif;
+}
+
+.gridlight-grid {
+  display: grid;
+  width: 500px;
+  height: 500px;
+  gap: 12px;
+  margin-bottom: 1rem;
+}
+
+.gridlight-row {
+  display: flex;
+  gap: 4px;
+}
+
+.gridlight-cell {
+  width: 100%;
+  height: 100%;
+  background: #eee;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.gridlight-cell.on {
+  background: #ffe066;
+  box-shadow: 0 0 8px #ffe066;
+}
+
+.gridlight-cell.disabled {
+  background: none;
+  border: none;
+  cursor: not-allowed;
+  opacity: 0.5;
+  box-shadow: none;
+}
+
+.gridlight-reset {
+  padding: 0.5rem 1.5rem;
+  border: none;
+  background: #333;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.2s;
+}
+
+.gridlight-reset:hover {
+  background: #555;
+}
+
+
+
 export default GridLight;

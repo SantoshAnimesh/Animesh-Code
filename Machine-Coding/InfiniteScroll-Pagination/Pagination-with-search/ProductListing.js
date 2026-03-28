@@ -1,3 +1,4 @@
+// Path: component/ProductListing
 
 import { useState, useCallback, useMemo } from "react";
 import useDebounce from "../hooks/useDebounce";

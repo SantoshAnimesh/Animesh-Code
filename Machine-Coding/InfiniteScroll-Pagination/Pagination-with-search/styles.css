@@ -1,0 +1,114 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: system-ui, sans-serif;
+}
+
+.App {
+  height: 100vh;
+  display: flex;
+}
+
+/* Container */
+.product-container {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow: hidden; /* prevents double scroll */
+
+  h2 {
+    text-align: center;
+  }
+}
+.search-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  outline: none;
+  font-size: 14px;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+  margin: 4px auto;
+}
+
+.search-input:focus {
+  border-color: #333;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Grid list */
+.list-box {
+  flex: 1;
+  display: grid;
+  gap: 12px;
+  padding: 8px;
+
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-rows: repeat(auto-fit, minmax(150px, 1fr));
+
+  overflow-y: auto;
+  scroll-behavior: smooth; /* ✅ smooth scroll */
+}
+
+/* Optional: smooth momentum scrolling (mobile) */
+.list-box {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Card */
+.card {
+  height: 100%;
+  padding: 12px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+
+  border-radius: 10px;
+  background: #fff;
+
+  box-shadow: 1px 2px 2px 2px rgba(0, 0, 0, 0.1);
+
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover effect */
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+}
+
+/* Full width elements */
+.loading,
+.error {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 12px;
+}
+
+/* Error */
+.error {
+  color: red;
+}
+
+/* Optional: nicer scrollbar */
+.list-box::-webkit-scrollbar {
+  width: 6px;
+}
+
+.list-box::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.list-box::-webkit-scrollbar-track {
+  background: transparent;
+}

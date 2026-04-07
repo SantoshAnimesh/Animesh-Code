@@ -54,5 +54,54 @@ console.log(callCurring(1, 2, 3, 4));   // 10
 console.log(callCurring(1, 2)(3, 4));   // 10
 console.log(callCurring(1)(2)(3)(4));   // 10
 
+// ---------- Best Way --------------
+function add(a) {
+  let sum = a;
+
+  function inner(b) {
+    if (b !== undefined) {
+      sum += b;
+      return inner;
+    }
+    return sum;
+  }
+
+  inner.valueOf = () => sum;
+  inner.toString = () => String(sum);
+
+  return inner;
+}
+
+// Usage examples:
+console.log(add(1)(2)(3)(4)());      // 10 (with extra parentheses)
+console.log(+add(1)(2)(3)(4));       // 10 (without extra parentheses, using unary +)
+console.log(add(1)(2)(3)(4).valueOf()); // 10
+
+// Explain
+What does this do?
+These lines assign custom behavior to the inner function when it is converted to a primitive value (like a number or string).
+
+Why is this useful?
+JavaScript allows objects (including functions) to define how they should be converted to a primitive value using valueOf and toString.
+
+valueOf is called when JavaScript expects a number (e.g., in arithmetic or with the unary +).
+toString is called when JavaScript expects a string (e.g., in string concatenation or console.log).
+
+Use Cases
+1. Arithmetic Operations
+The unary + operator tries to convert the function to a number.
+It calls valueOf, which returns the sum.
+2. Console Logging
+console.log tries to convert the function to a string.
+It calls toString, which returns the sum as a string.
+
+3. String Concatenation
+The function is converted to a string using toString.
+Why not just return the sum?
+If you just return the sum, you lose the ability to keep chaining calls.
+By using valueOf and toString, you can keep returning a function for chaining, but still get the sum when needed.
+
+
+
 
 

@@ -30,3 +30,12 @@ function longestSubstringWithAtLeatTwoDistinct(s) {
 }
 
 console.log(longestSubstringWithAtLeatTwoDistinct("aabbccc")); // 5 
+
+
+// -----------------------------------------------
+Time Complexity: O(n)
+Space Complexity: O(K)
+
+Complexity	Best-Case	Worst-Case	 Reason
+Time	     O(n)	     O(n)	     right moves n times, left moves at most n times.
+Space	     O(1)	     O(1)	     The map holds at most 3 distinct characters (2 allowed + 1 before shrinking).
